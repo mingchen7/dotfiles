@@ -13,3 +13,8 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias ls="eza --icons=always"
+
+# Source the common configuration file if it exists
+if [ -f "$HOME/.sharedrc" ]; then
+  source "$HOME/.sharedrc"
+fi

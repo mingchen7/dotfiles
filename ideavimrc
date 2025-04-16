@@ -1,0 +1,73 @@
+set ideajoin
+set idearefactormode=keep
+
+set clipboard+=unnamed
+set clipboard+=ideaput
+set scrolloff=5
+
+let mapleader = ' '
+set relativenumber
+set number
+nmap <c-o> <Action>(Back)
+nmap <c-i> <Action>(Forward)
+nnoremap <c-w>v :action SplitVertically<CR>
+nnoremap <c-w>s :action SplitHorizontally<CR>
+nnoremap <c-w>q :action Unsplit<CR>
+
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+nnoremap <Leader>= :action ReformatCode<CR>
+nnoremap <leader>o :action OptimizeImports<CR>
+nnoremap <leader>s :action GotoRelated<CR>
+nnoremap <leader>h :action CallHierarchy<CR>
+nnoremap <leader>b :action ShowNavBar<CR>
+nnoremap gh :action FindUsages<CR>
+nnoremap gs :action GotoSymbol<CR>
+nnoremap gc :action GotoClass<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gp :action GotoSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+
+nmap <leader>aa :action FindInPath<cr>
+vmap <leader>aa :action FindInPath<cr>
+nmap <leader>lg :action SearchEverywhere<cr>
+vmap <leader>lg :action SearchEverywhere<cr>
+nmap <leader>af :action GotoFile<cr>
+vmap <leader>af :action GotoFile<cr>
+nmap <leader>f :action GotoFile<cr>
+nmap <leader>bb :action RecentFiles<cr>
+nmap <leader>an :action GotoAction<cr>
+
+nmap <leader>y "*y
+vmap <leader>y "*y
+
+nnoremap m. :action ToggleBookmark<cr>
+
+nnoremap ma :action ToggleBookmark0<cr>
+nnoremap mb :action ToggleBookmark1<cr>
+nnoremap mc :action ToggleBookmark2<cr>
+nnoremap md :action ToggleBookmark3<cr>
+nnoremap me :action ToggleBookmark4<cr>
+nnoremap mf :action ToggleBookmark5<cr>
+nnoremap mg :action ToggleBookmark6<cr>
+nnoremap mh :action ToggleBookmark7<cr>
+nnoremap mi :action ToggleBookmark8<cr>
+nnoremap mj :action ToggleBookmark9<cr>
+
+nnoremap 'a :action GotoBookmark0<cr>
+nnoremap 'b :action GotoBookmark1<cr>
+nnoremap 'c :action GotoBookmark2<cr>
+nnoremap 'd :action GotoBookmark3<cr>
+nnoremap 'e :action GotoBookmark4<cr>
+nnoremap 'f :action GotoBookmark5<cr>
+nnoremap 'g :action GotoBookmark6<cr>
+nnoremap 'h :action GotoBookmark7<cr>
+nnoremap 'i :action GotoBookmark8<cr>
+nnoremap 'j :action GotoBookmark9<cr>
+

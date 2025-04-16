@@ -1,0 +1,8 @@
+# arrow up
+"\e[A":history-search-backward
+# arrow down
+"\e[B":history-search-forward
+# cycle through tab completion options
+TAB: menu-complete
+# Shift-TAB cycles completions backward
+"\e[Z": menu-complete-backward

@@ -1,0 +1,94 @@
+# vim: set ft=sh :
+
+# alias
+alias vim='nvim'
+
+alias af='git ls-files | ack --smart-case --no-column --noenv'
+alias ag='rg'
+alias be='bundle exec'
+# use `bundle config set path 'vendor/bundle'` and `bundle binstubs --all`
+alias bi='bundle install'
+alias fvim="vim \$(fzf)"
+alias grep='grep --color=auto'
+alias l='ls -CF'
+alias la='ls -A'
+alias lgit='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -F /dev/null" git'
+alias ll='ls -alF'
+alias mcopy='reattach-to-user-namespace pbcopy'
+alias mpaste='reattach-to-user-namespace pbpaste'
+alias ping='prettyping --nolegend'
+alias preview="fzf --preview='bat --color always {}'"
+alias pt='pstree'
+alias rb='rbenv'
+alias rgn='rg --no-config'
+alias ssh='TERM=xterm ssh'
+alias tailf='tail -f'
+alias tf='terraform'
+alias tigs='tig status'
+alias vs='vim -S Session.vim'
+alias tcommit="git add . ; date +\"%Y-%m-%d\" | xargs git ci -m"
+alias ycommit="git add . ; date -v-1d +\"%Y-%m-%d\" | xargs git ci -m"
+LESS="-iXRF"; export LESS
+
+
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
+
+# bat - replacement of cat
+if [[ -f "$HOMEBREW_PREFIX/bin/bat" ]]; then
+  alias cat='bat'
+  export BAT_THEME='Catppuccin Mocha'
+fi
+
+# bottom - system monitoring
+if [[ -f "$HOMEBREW_PREFIX/bin/btm" ]]; then
+  alias btop='btm'
+  alias bottom='btm'
+fi
+
+# use fd or rg for searching in fzf
+if which fd > /dev/null; then
+  export FZF_DEFAULT_COMMAND="fd --hidden --follow --type f --ignore-file=$HOME/.fdignore"
+elif which rg > /dev/null; then
+  export FZF_DEFAULT_COMMAND="rg --hidden --glob '!.git/*' --files"
+fi
+
+## Prevent file overwrite on stdout redirection
+## # Use `>|` to force redirection to an existing file
+set -o noclobber
+
+# Environment
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export GIT_EDITOR=nvim
+
+## rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+## pyenv
+export PATH="/Users/$(whoami)/.pyenv/bin:$PATH"
+if which pyenv > /dev/null; then eval "$(pyenv init --path)"; fi
+
+if [ -d $HOME/.local/bin ]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
+## autojump script
+autojump_script="$HOMEBREW_PREFIX/etc/profile.d/autojump.sh"
+if [ -r "$autojump_script" ]; then
+  source "$autojump_script"
+fi
+
+# fzf
+[[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/completion.bash" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.bash"
+[[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.bash" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.bash"
+
+## git completion
+git_completion="$HOMEBREW_PREFIX/etc/bash_completion.d/git-completion.bash"
+if [ -r "$git_completion" ]; then
+   source "$git_completion"
+fi
+unset git_completion
+
+
+
+
