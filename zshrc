@@ -18,3 +18,9 @@ alias ls="eza --icons=always"
 if [ -f "$HOME/.sharedrc" ]; then
   source "$HOME/.sharedrc"
 fi
+
+[[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+[[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+
+alias tmux="TERM=screen-256color-bce tmux"
+

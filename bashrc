@@ -6,12 +6,11 @@ if [ -f "$HOME/.sharedrc" ]; then
 fi
 
 # ------ Below are Bash specific settings -----
-## Enable history expansion with space
-## E.g. typing !!<space> will replace the !! with your last command
+## Enable history expansion with space ## E.g. typing !!<space> will replace the !! with your last command
 bind Space:magic-space
 
 ## Turn on recursive globbing (enables ** to recurse all directories)
-shopt -s globstar 2> /dev/null
+shopt -s globstar 2>/dev/null
 
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
 
@@ -39,11 +38,11 @@ bind '"\e[C": forward-char'
 bind '"\e[D": backward-char'
 
 ## Prepend cd to directory names automatically
-shopt -s autocd 2> /dev/null
+shopt -s autocd 2>/dev/null
 ## Correct spelling errors during tab-completion
-shopt -s dirspell 2> /dev/null
+shopt -s dirspell 2>/dev/null
 ## Correct spelling errors in arguments supplied to cd
-shopt -s cdspell 2> /dev/null
+shopt -s cdspell 2>/dev/null
 
 shopt -s histappend
 export HISTSIZE=-1
@@ -53,3 +52,17 @@ export HISTCONTROL=ignoredups:erasedups
 if ! echo "$PROMPT_COMMAND" | grep -q history; then
   export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 fi
+
+# fzf
+[[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/completion.bash" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.bash"
+[[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.bash" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.bash"
+
+## git completion
+# git_completion="$HOMEBREW_PREFIX/etc/bash_completion.d/git-completion.bash"
+# if [ -r "$git_completion" ]; then
+#   source "$git_completion"
+# fi
+# unset git_completion
+#
+
+alias tmux="TERM=screen-256color-bce tmux"
