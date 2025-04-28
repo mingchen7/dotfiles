@@ -41,7 +41,7 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# alias ls="eza --icons=always"
+alias ls="eza --icons=always"
 
 # Source the common configuration file if it exists
 if [ -f "$HOME/.sharedrc" ]; then
