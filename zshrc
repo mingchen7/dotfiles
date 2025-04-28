@@ -71,6 +71,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init - zsh)"
 
 alias lg='lazygit'
+alias gst='git status'
 
 # autoenv
 source $(brew --prefix autoenv)/activate.sh
