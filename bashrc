@@ -1,8 +1,37 @@
+### BEGIN HOMEBREW FOR APPLE SILICON
+if [[ $(/usr/bin/uname -m) == "arm64" ]]; then
+	if [[ -f /opt/homebrew/bin/brew ]]; then
+		export HOMEBREW_PREFIX="/opt/homebrew"
+		export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+		export HOMEBREW_REPOSITORY="/opt/homebrew"
+		export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/llvm/bin:/opt/homebrew/opt/python/bin${PATH+:$PATH}"
+		if [[ ":$LIBRARY_PATH:" != *":/opt/homebrew/lib:"* ]]; then
+			export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew/lib"
+		fi
+		export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+		export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+		# export DYLD_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_LIBRARY_PATH
+	fi
+else
+	if [[ -f /usr/local/bin/brew ]]; then
+		export HOMEBREW_PREFIX="/usr/local"
+		export HOMEBREW_CELLAR="/usr/local/Cellar"
+		export HOMEBREW_REPOSITORY="/opt/homebrew"
+		export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/llvm/bin:/usr/local/opt/python/bin:$PATH"
+		if [[ ":$LIBRARY_PATH:" != *":/usr/local/lib:"* ]]; then
+			export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
+		fi
+		export MANPATH="/usr/local/share/man${MANPATH+:$MANPATH}:"
+		export INFOPATH="/usr/local/share/info:${INFOPATH:-}"
+	fi
+fi
+### END HOMEBREW FOR APPLE SILICON
+
 [[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
 
 # Source the common configuration file if it exists
 if [ -f "$HOME/.sharedrc" ]; then
-  source "$HOME/.sharedrc"
+	source "$HOME/.sharedrc"
 fi
 
 # ------ Below are Bash specific settings -----
@@ -50,7 +79,7 @@ export HISTFILESIZE=-1
 export HISTCONTROL=ignoredups:erasedups
 
 if ! echo "$PROMPT_COMMAND" | grep -q history; then
-  export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+	export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 fi
 
 # fzf
