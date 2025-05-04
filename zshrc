@@ -1,3 +1,18 @@
+echo "loading Stripe zsh script"
+
+### BEGIN HOMEBREW FOR APPLE SILICON
+if [[ $(/usr/bin/uname -m) == "arm64" ]]; then
+  if [[ -f /opt/homebrew/bin/brew ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew";
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+    export HOMEBREW_REPOSITORY="/opt/homebrew";
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+  fi
+fi
+### END HOMEBREW
+
 ### BEGIN STRIPE
 # All Stripe related shell configuration
 # is at ~/.stripe/shellinit/zshrc and is
@@ -13,19 +28,7 @@ if [[ -f ~/.stripe/shellinit/zshrc ]]; then
 fi
 ### END STRIPE
 
-
-### BEGIN HOMEBREW FOR APPLE SILICON
-if [[ $(/usr/bin/uname -m) == "arm64" ]]; then
-  if [[ -f /opt/homebrew/bin/brew ]]; then
-    export HOMEBREW_PREFIX="/opt/homebrew";
-    export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-    export HOMEBREW_REPOSITORY="/opt/homebrew";
-    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
-    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
-  fi
-fi
-### END HOMEBREW
+echo "loading my zsh script"
 
 # History setup
 HISTFILE=$HOME/.zhistory
@@ -50,6 +53,7 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -74,6 +78,6 @@ alias lg='lazygit'
 alias gst='git status'
 
 # autoenv
-source $(brew --prefix autoenv)/activate.sh
-AUTOENV_ENABLE_LEAVE=yes
-AUTOENV_VIEWER=cat
+# source $(brew --prefix autoenv)/activate.sh
+# AUTOENV_ENABLE_LEAVE=yes
+# AUTOENV_VIEWER=cat
