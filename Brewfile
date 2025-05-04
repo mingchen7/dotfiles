@@ -116,7 +116,7 @@ brew "terraform-ls"
 brew "tcl-tk@8"
 brew "tig"
 brew "tldr"
-brew "trash"
+# brew "trash"
 brew "tree"
 brew "tree-sitter"
 brew "urlview"
@@ -144,10 +144,11 @@ cask "bruno"
 cask "mitmproxy"
 
 # font
+brew "alfred"
 brew "font-meslo-lg-nerd-font"
 
 # zsh
 brew "powerlevel10k"
 brew "zsh-autosuggestions"
-brew "zsh-syntax-hightlighting"
+brew "zsh-syntax-highlighting"
 brew "eza"
