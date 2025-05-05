@@ -1,5 +1,3 @@
-echo "loading Stripe zsh script"
-
 ### BEGIN HOMEBREW FOR APPLE SILICON
 if [[ $(/usr/bin/uname -m) == "arm64" ]]; then
   if [[ -f /opt/homebrew/bin/brew ]]; then
@@ -27,8 +25,6 @@ if [[ -f ~/.stripe/shellinit/zshrc ]]; then
   source ~/.stripe/shellinit/zshrc
 fi
 ### END STRIPE
-
-echo "loading my zsh script"
 
 # History setup
 HISTFILE=$HOME/.zhistory
