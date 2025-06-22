@@ -210,7 +210,23 @@ return {
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                autoImportCompletions = true,
+              },
+            },
+          },
+        },
+        ruff = {
+          settings = {
+            -- init_options = {
+            --   configuration = '~/stripe/zoolander/pyproject.toml',
+            --   configurationPreference = 'filesystemFirst',
+            -- },
+          },
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
