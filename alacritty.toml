@@ -1,6 +1,6 @@
 general.import = [
-  "~/.config/alacritty/catppuccin-frappe.toml",
-  # "~/.config/alacritty/catppuccin-mocha.toml"
+	"~/.config/alacritty/catppuccin-frappe.toml",
+	# "~/.config/alacritty/catppuccin-mocha.toml"
 ]
 general.live_config_reload = true
 
@@ -896,7 +896,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 decorations = "full"
 dynamic_padding = false
 dynamic_title = true
-opacity = 0.9
+opacity = 0.5
 option_as_alt = "Both"
 startup_mode = "Windowed"
 blur = true
