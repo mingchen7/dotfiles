@@ -94,4 +94,19 @@ return {
       'nvim-telescope/telescope.nvim', -- optional
     },
   },
+  {
+    'sindrets/diffview.nvim',
+    name = 'diffview',
+    opts = {
+      use_icons = false,
+    },
+    -- You can add the keymaps directly here or source them from another file.
+    -- For example, if you want to keep them with the plugin config:
+    keys = {
+      { '<leader>gd', ':DiffviewOpen<CR>', desc = 'Open Diffview' },
+      { '<leader>gx', ':DiffviewClose<CR>', desc = 'Close Diffview' },
+      { '<leader>gh', ':DiffviewFileHistory<CR>', desc = 'Diffview File History' },
+      { '<leader>gc', ':DiffviewLog<CR>', desc = 'Diffview Log' },
+    },
+  },
 }
