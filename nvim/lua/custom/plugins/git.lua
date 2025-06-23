@@ -102,14 +102,18 @@ return {
     opts = {
       use_icons = false,
     },
+    config = function()
+      vim.keymap.set('n', '<leader>dv', ':DiffviewOpen<CR>', { desc = '[D]iffview [V]iew' })
+      vim.keymap.set('n', '<leader>dx', ':DiffviewClose<CR>', { desc = '[D]iffview E[x]it' })
+      vim.keymap.set('n', '<leader>dh', ':DiffviewFileHistory<CR>', { desc = '[D]iffview [H]istory' })
+      vim.keymap.set('n', '<leader>dl', ':DiffviewLog<CR>', { desc = '[D]iffview [L]og' })
+    end,
     -- You can add the keymaps directly here or source them from another file.
     -- For example, if you want to keep them with the plugin config:
-    keys = {
-      { '<leader>gd', ':DiffviewOpen<CR>', desc = 'Diffview Open' },
-      { '<leader>gx', ':DiffviewClose<CR>', desc = 'Diffview Close' },
-      { '<leader>gh', ':DiffviewFileHistory<CR>', desc = 'Diffview File History' },
-      { '<leader>gc', ':DiffviewLog<CR>', desc = 'Diffview Log' },
-    },
+    -- keys = {
+    -- { '<leader>dv', ':DiffviewOpen<CR>', desc = '[D]iffview Open' },
+    -- { '<leader>dx', ':DiffviewClose<CR>', desc = '[D]iffview Close' },
+    -- { '<leader>dh', ':DiffviewFileHistory<CR>', desc = '[D]iffview File History' },
+    -- { '<leader>dl', ':DiffviewLog<CR>', desc = '[D]iffview Log' },
   },
-  { 'nvim-tree/nvim-web-devicons', opts = {} },
 }
