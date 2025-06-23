@@ -12,6 +12,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.keymap.set('n', 'p', 'P<Paste><C-o>dd', { desc = 'Paste one line below' })
+
 -- Function to get relative file path and copy to clipboard
 local function copy_relative_path()
   -- Try to get the git root directory
