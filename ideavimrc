@@ -10,8 +10,8 @@ set relativenumber
 set number
 nmap <c-o> <Action>(Back)
 nmap <c-i> <Action>(Forward)
-nnoremap <c-w>v :action SplitVertically<CR>
-nnoremap <c-w>s :action SplitHorizontally<CR>
+nnoremap <c-w>\ :action SplitVertically<CR>
+nnoremap <c-w>- :action SplitHorizontally<CR>
 nnoremap <c-w>q :action Unsplit<CR>
 
 sethandler <c-j> a:vim
