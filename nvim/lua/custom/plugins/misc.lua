@@ -83,7 +83,7 @@ return {
       require('nvim-tree').setup {
         sort = { sorter = 'case_sensitive' },
         view = {
-          width = 30,
+          width = 40,
           adaptive_size = false,
         },
         renderer = { group_empty = true },

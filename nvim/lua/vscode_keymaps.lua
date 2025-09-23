@@ -43,6 +43,14 @@ vim.keymap.set('n', 'K', function()
   require('vscode').action 'editor.action.showHover'
 end, { desc = 'Show Definition (VSCode)' })
 
+vim.keymap.set('n', '<leader>e', function()
+  require('vscode').action 'workbench.action.toggleSidebarVisibility'
+end, { desc = 'Toggle Sidebar Explorer' })
+
+vim.keymap.set('n', '<leader>a', function()
+  require('vscode').action 'workbench.action.toggleAuxiliaryBar'
+end, { desc = 'Toggle AI Pane (Auxiliary Bar)' })
+
 -- Function to get relative file path and copy to clipboard
 local function copy_relative_path()
   -- Try to get the git root directory
