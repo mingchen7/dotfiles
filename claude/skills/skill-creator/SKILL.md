@@ -273,7 +273,35 @@ Skip this step only if the skill being developed already exists, and iteration o
 
 **IMPORTANT: Always create new skills in `~/github/dotfiles/claude/skills/`**
 
-Create the skill directory structure:
+#### Option A: Use init_skill.py Script (Recommended)
+
+Run the initialization script to automatically create the skill structure:
+
+```bash
+python3 ~/github/dotfiles/claude/skills/skill-creator/scripts/init_skill.py <skill-name>
+```
+
+This will create:
+- Skill directory at `~/github/dotfiles/claude/skills/<skill-name>/`
+- `SKILL.md` with comprehensive template including 4 structure patterns (workflow-based, task-based, reference/guidelines, capabilities-based)
+- `scripts/example.py` - Example executable script
+- `references/api_reference.md` - Example reference documentation
+- `assets/example_asset.txt` - Example asset placeholder
+
+The generated SKILL.md includes:
+- TODO markers for what needs to be filled in
+- Four proven skill structure patterns with examples
+- Inline guidance about when to use each resource type
+- References to real Anthropic skills as examples
+
+**Optional custom path:**
+```bash
+python3 ~/github/dotfiles/claude/skills/skill-creator/scripts/init_skill.py <skill-name> --path ~/custom/location
+```
+
+#### Option B: Manual Creation
+
+Create the skill directory structure manually:
 
 ```bash
 # Create skill directory
@@ -285,7 +313,7 @@ mkdir -p ~/github/dotfiles/claude/skills/<skill-name>/references
 mkdir -p ~/github/dotfiles/claude/skills/<skill-name>/assets
 ```
 
-Create a SKILL.md file with this template:
+Create a SKILL.md file with this minimal template:
 
 ```markdown
 ---
@@ -306,7 +334,7 @@ description: Brief description of what the skill does and when to use it. Includ
 [Provide concrete examples of how to use the skill]
 ```
 
-After initialization, implement the skill contents as described in Step 4.
+After initialization (via script or manual), implement the skill contents as described in Step 4.
 
 ### Step 4: Edit the Skill
 
