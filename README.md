@@ -72,3 +72,6 @@ brew install font-meslo-lg-nerd-font
 mkdir -p ~/.config/tmux/plugins/catppuccin
 git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
 ```
+
+## Cursor key repeating
+`defaults write "$(osascript -e 'id of app "Cursor"')" ApplePressAndHoldEnabled -bool false`
