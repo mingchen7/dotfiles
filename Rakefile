@@ -3,7 +3,7 @@ require 'rake'
 desc "install the dotfiles into user's home directory"
 task :install do
   replace_all = ENV["REPLACE_ALL"] == "true"
-  non_config_files = %w{Rakefile README.md LICENSE Session.vim linux_setup.sh autoenv neovim.rb}
+  non_config_files = %w{Rakefile README.md LICENSE Session.vim linux_setup.sh autoenv neovim.rb claude}
 
   Dir['*'].each do |file|
     next if non_config_files.include? file
@@ -41,6 +41,31 @@ task :install do
     else
       puts "linking #{file} to ~/.config/#{file}"
       system %Q{ln -s "$PWD/#{file}" "$HOME/.config/#{file}"}
+    end
+  end
+
+  # Install Claude commands and skills
+  system %Q{mkdir -p "$HOME/.claude"}
+
+  Dir['claude/commands/*'].each do |file|
+    target = File.join(ENV['HOME'], ".claude/commands", File.basename(file))
+    system %Q{mkdir -p "$HOME/.claude/commands"}
+    if File.identical? file, target
+      puts "identical ~/.claude/commands/#{File.basename(file)}"
+    else
+      puts "linking #{file} to ~/.claude/commands/#{File.basename(file)}"
+      system %Q{ln -s "$PWD/#{file}" "#{target}"}
+    end
+  end
+
+  Dir['claude/skills/*'].each do |file|
+    target = File.join(ENV['HOME'], ".claude/skills", File.basename(file))
+    system %Q{mkdir -p "$HOME/.claude/skills"}
+    if File.identical? file, target
+      puts "identical ~/.claude/skills/#{File.basename(file)}"
+    else
+      puts "linking #{file} to ~/.claude/skills/#{File.basename(file)}"
+      system %Q{ln -s "$PWD/#{file}" "#{target}"}
     end
   end
 end
