@@ -22,6 +22,15 @@ equipped with procedural knowledge that no model can fully possess.
 3. Domain expertise - Company-specific knowledge, schemas, business logic
 4. Bundled resources - Scripts, references, and assets for complex and repetitive tasks
 
+### Quick Reference
+
+**Location:** Always create skills in `~/github/dotfiles/claude/skills/`
+
+**Installation:** Always run after creating or updating a skill:
+```bash
+cd ~/github/dotfiles && rake install
+```
+
 ## Core Principles
 
 ### Concise is Key
@@ -206,12 +215,14 @@ Skill creation involves these steps:
 
 1. Understand the skill with concrete examples
 2. Plan reusable skill contents (scripts, references, assets)
-3. Initialize the skill (run init_skill.py)
+3. Initialize the skill directory structure
 4. Edit the skill (implement resources and write SKILL.md)
-5. Package the skill (run package_skill.py)
+5. Install the skill with `rake install`
 6. Iterate based on real usage
 
 Follow these steps in order, skipping only if there is a clear reason why they are not applicable.
+
+**IMPORTANT: Always create new skills in `~/github/dotfiles/claude/skills/` and run `cd ~/github/dotfiles && rake install` after creating or updating any skill.**
 
 ### Step 1: Understanding the Skill with Concrete Examples
 
@@ -260,22 +271,42 @@ At this point, it is time to actually create the skill.
 
 Skip this step only if the skill being developed already exists, and iteration or packaging is needed. In this case, continue to the next step.
 
-When creating a new skill from scratch, always run the `init_skill.py` script. The script conveniently generates a new template skill directory that automatically includes everything a skill requires, making the skill creation process much more efficient and reliable.
+**IMPORTANT: Always create new skills in `~/github/dotfiles/claude/skills/`**
 
-Usage:
+Create the skill directory structure:
 
 ```bash
-scripts/init_skill.py <skill-name> --path <output-directory>
+# Create skill directory
+mkdir -p ~/github/dotfiles/claude/skills/<skill-name>
+
+# Optional: Create resource directories if needed
+mkdir -p ~/github/dotfiles/claude/skills/<skill-name>/scripts
+mkdir -p ~/github/dotfiles/claude/skills/<skill-name>/references
+mkdir -p ~/github/dotfiles/claude/skills/<skill-name>/assets
 ```
 
-The script:
+Create a SKILL.md file with this template:
 
-- Creates the skill directory at the specified path
-- Generates a SKILL.md template with proper frontmatter and TODO placeholders
-- Creates example resource directories: `scripts/`, `references/`, and `assets/`
-- Adds example files in each directory that can be customized or deleted
+```markdown
+---
+name: skill-name
+description: Brief description of what the skill does and when to use it. Include triggers and contexts here.
+---
 
-After initialization, customize or remove the generated SKILL.md and example files as needed.
+# Skill Name
+
+[Instructions for using this skill go here]
+
+## Core Operations
+
+[Document the main operations this skill supports]
+
+## Examples
+
+[Provide concrete examples of how to use the skill]
+```
+
+After initialization, implement the skill contents as described in Step 4.
 
 ### Step 4: Edit the Skill
 
@@ -318,32 +349,34 @@ Do not include any other fields in YAML frontmatter.
 
 Write instructions for using the skill and its bundled resources.
 
-### Step 5: Packaging a Skill
+### Step 5: Installing the Skill
 
-Once development of the skill is complete, it must be packaged into a distributable .skill file that gets shared with the user. The packaging process automatically validates the skill first to ensure it meets all requirements:
+Once development of the skill is complete, install it to make it available to Claude Code.
 
-```bash
-scripts/package_skill.py <path/to/skill-folder>
-```
-
-Optional output directory specification:
+**IMPORTANT: Always run this command after creating or updating a skill:**
 
 ```bash
-scripts/package_skill.py <path/to/skill-folder> ./dist
+cd ~/github/dotfiles && rake install
 ```
 
-The packaging script will:
+This command:
 
-1. **Validate** the skill automatically, checking:
+1. Processes all skills in `~/github/dotfiles/claude/skills/`
+2. Makes them available to Claude Code for use
+3. Updates the skill registry with any changes
 
-   - YAML frontmatter format and required fields
-   - Skill naming conventions and directory structure
-   - Description completeness and quality
-   - File organization and resource references
+**Validation checklist before installing:**
 
-2. **Package** the skill if validation passes, creating a .skill file named after the skill (e.g., `my-skill.skill`) that includes all files and maintains the proper directory structure for distribution. The .skill file is a zip file with a .skill extension.
+Before running `rake install`, verify your skill has:
 
-If validation fails, the script will report the errors and exit without creating a package. Fix any validation errors and run the packaging command again.
+- ✅ Valid YAML frontmatter with `name` and `description` fields
+- ✅ Proper skill naming (kebab-case, no spaces)
+- ✅ Complete description that includes when to use the skill
+- ✅ Clear instructions in the SKILL.md body
+- ✅ All referenced files actually exist in the skill directory
+- ✅ No extra documentation files (README.md, etc.)
+
+If there are errors during installation, review the error messages, fix the issues, and run `rake install` again.
 
 ### Step 6: Iterate
 
