@@ -1,45 +1,3 @@
-### BEGIN STRIPE
-# All Stripe related shell configuration
-# is at ~/.stripe/shellinit/bashrc and is
-# persistently managed by Chef. You shouldn't
-# remove this unless you don't want to load
-# Stripe specific shell configurations.
-#
-# Feel free to add your customizations in this
-# file (~/.bashrc) after the Stripe config
-# is sourced.
-[ -f ~/.stripe/shellinit/bashrc ] && source ~/.stripe/shellinit/bashrc
-### END STRIPE
-
-### BEGIN HOMEBREW FOR APPLE SILICON
-if [[ $(/usr/bin/uname -m) == "arm64" ]]; then
-	if [[ -f /opt/homebrew/bin/brew ]]; then
-		export HOMEBREW_PREFIX="/opt/homebrew"
-		export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-		export HOMEBREW_REPOSITORY="/opt/homebrew"
-		export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/llvm/bin:/opt/homebrew/opt/python/bin${PATH+:$PATH}"
-		if [[ ":$LIBRARY_PATH:" != *":/opt/homebrew/lib:"* ]]; then
-			export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew/lib"
-		fi
-		export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
-		export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-		# export DYLD_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_LIBRARY_PATH
-	fi
-else
-	if [[ -f /usr/local/bin/brew ]]; then
-		export HOMEBREW_PREFIX="/usr/local"
-		export HOMEBREW_CELLAR="/usr/local/Cellar"
-		export HOMEBREW_REPOSITORY="/opt/homebrew"
-		export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/llvm/bin:/usr/local/opt/python/bin:$PATH"
-		if [[ ":$LIBRARY_PATH:" != *":/usr/local/lib:"* ]]; then
-			export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
-		fi
-		export MANPATH="/usr/local/share/man${MANPATH+:$MANPATH}:"
-		export INFOPATH="/usr/local/share/info:${INFOPATH:-}"
-	fi
-fi
-### END HOMEBREW FOR APPLE SILICON
-
 [[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
 
 # Source the common configuration file if it exists
@@ -99,12 +57,5 @@ fi
 [[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/completion.bash" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.bash"
 [[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.bash" ]] && source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.bash"
 
-## git completion
-# git_completion="$HOMEBREW_PREFIX/etc/bash_completion.d/git-completion.bash"
-# if [ -r "$git_completion" ]; then
-#   source "$git_completion"
-# fi
-# unset git_completion
-#
 
 alias tmux="TERM=screen-256color-bce tmux"
