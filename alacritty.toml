@@ -1,6 +1,6 @@
 general.import = [
-  "~/.config/alacritty/catppuccin-frappe.toml",
-  # "~/.config/alacritty/catppuccin-mocha.toml"
+	"~/.config/alacritty/catppuccin-frappe.toml",
+	# "~/.config/alacritty/catppuccin-mocha.toml"
 ]
 general.live_config_reload = true
 

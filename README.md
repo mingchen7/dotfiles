@@ -18,14 +18,11 @@ Use homebrew to install packages.
 # https://brew.sh/
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# for install fonts
-brew tap homebrew/cask-fonts
-
 # packages are managed by `Brewfile`
-brew bundle install --no-lock --verbose
+brew bundle install --verbose
 
 # install missing packages only
-brew bundle install --no-upgrade --no-lock --verbose
+brew bundle install --no-upgrade --verbose
 
 ```
 
@@ -71,11 +68,10 @@ brew install font-meslo-lg-nerd-font
 ## themes
 
 ```sh
-# Alacritty: https://github.com/catppuccin/alacritty
-# example: install the mocha theme
-curl -LO --output-dir ~/.config/alacritty https://github.com/catppuccin/alacritty/raw/main/catppuccin-mocha.toml
-
 # Tmux: https://github.com/catppuccin/tmux
 mkdir -p ~/.config/tmux/plugins/catppuccin
 git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
 ```
+
+## Cursor key repeating
+`defaults write "$(osascript -e 'id of app "Cursor"')" ApplePressAndHoldEnabled -bool false`
