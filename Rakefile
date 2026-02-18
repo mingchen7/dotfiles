@@ -44,8 +44,19 @@ task :install do
     end
   end
 
-  # Install Claude commands and skills
+  # Install Claude CLAUDE.md, commands, and skills
   system %Q{mkdir -p "$HOME/.claude"}
+
+  # Symlink CLAUDE.md
+  claude_md = "claude/CLAUDE.md"
+  claude_md_target = File.join(ENV['HOME'], ".claude/CLAUDE.md")
+  if File.exist?(claude_md_target) && File.identical?(claude_md, claude_md_target)
+    puts "identical ~/.claude/CLAUDE.md"
+  else
+    system %Q{rm -f "#{claude_md_target}"}
+    puts "linking #{claude_md} to ~/.claude/CLAUDE.md"
+    system %Q{ln -s "$PWD/#{claude_md}" "#{claude_md_target}"}
+  end
 
   Dir['claude/commands/*'].each do |file|
     target = File.join(ENV['HOME'], ".claude/commands", File.basename(file))
