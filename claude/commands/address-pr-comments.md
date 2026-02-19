@@ -116,11 +116,28 @@ Reviewer: [reviewer name]
 
 Read the file around the commented lines to understand context. If the comment references other files or patterns, read those too. Use Sourcegraph if the comment mentions patterns used "elsewhere" in the codebase.
 
-### Step C: Propose a fix
+### Step C: Classify the comment and propose a response
 
-Analyze the comment and decide on an action:
+First, **think about what kind of comment this is** before deciding what to do. Not every comment needs a code change. Classify it:
 
-**If a code change is appropriate:**
+**Type 1 — Direct change request** (e.g., "use k notation instead of embed_dim-1", "add log_scaler here", "make this parameterizable")
+→ The reviewer wants specific code changed. Make the edit, show the diff.
+
+**Type 2 — Question about the code** (e.g., "what does this do?", "why did you choose X?", "what is F here?")
+→ The reviewer wants to **understand** the code. Answer the question thoughtfully in the reply. Only make a code change if the question reveals the code is genuinely unclear (e.g., add a comment or rename a variable) — but the primary response should be the answer. Don't add unnecessary inline comments just to "fix" a question.
+
+**Type 3 — Guidance / context / reference material** (e.g., reviewer shares a paper, formula, design doc, or explains how something should work)
+→ The reviewer is providing direction for how to implement something. Acknowledge the guidance, discuss how you'd incorporate it, and make the corresponding code change if it's clear what's needed. If the guidance is complex, explain your interpretation and proposed approach before editing.
+
+**Type 4 — Observation / FYI** (e.g., "this might be a dup of X", "we already have Y", "we probably don't need this anymore")
+→ The reviewer is pointing something out. Acknowledge it and make the appropriate change (remove dead code, switch to the existing thing, etc.).
+
+**Type 5 — Discussion / design disagreement** (e.g., "I think we should approach this differently", "have you considered X instead?")
+→ Engage in the discussion. Present your reasoning, trade-offs, and ask the user what they prefer. Don't just make a change — this needs a human decision.
+
+Then take the appropriate action:
+
+**For code changes (Types 1, 3, 4 when clear):**
 1. Make the edit using the Edit tool
 2. Show the diff for that specific file:
    ```bash
@@ -131,16 +148,26 @@ Analyze the comment and decide on an action:
    Proposed reply: [claude] Done — [brief description]
    ```
 
-**If the comment is a question or discussion point (no code change):**
-1. Draft a response that answers the question or explains the reasoning
-2. Show it:
+**For questions (Type 2):**
+1. Draft a substantive answer that addresses what the reviewer is asking
+2. Only touch code if it's genuinely confusing (rename, clarify) — not just adding a comment for a question
+3. Show:
    ```
-   Proposed reply: [claude] [your response]
+   Proposed reply: [claude] [substantive answer to their question]
    ```
 
-**If the suggestion would be harmful:**
-1. Explain why and propose an alternative if possible
-2. Show the draft reply
+**For guidance/context (Type 3 when complex):**
+1. Summarize your understanding of the guidance
+2. Explain how you'd apply it to the code
+3. Show proposed code changes + reply:
+   ```
+   Proposed reply: [claude] [acknowledge guidance, explain what was changed to align with it]
+   ```
+
+**For discussions (Type 5):**
+1. Present the trade-offs to the user
+2. Ask which direction they prefer before making any change
+3. No proposed reply yet — wait for user input
 
 ### Step D: Wait for user input
 
@@ -192,11 +219,15 @@ On user approval, invoke the `commit-push-pr` skill. The commit message should b
 
 After the push succeeds, post all replies in parallel:
 
-**For inline/review comments:**
+**For inline/review comments (threaded reply):**
+Use the create review comment endpoint with `in_reply_to` to thread the reply under the original comment:
 ```bash
-gh api repos/{owner}/{repo}/pulls/comments/{comment_id}/replies \
-  -f body="[claude] Done — [description]"
+gh api repos/{owner}/{repo}/pulls/{pr_number}/comments \
+  -f body="[claude] Done — [description]" \
+  -F in_reply_to={comment_id}
 ```
+
+Do NOT use `repos/.../pulls/comments/{id}/replies` — that endpoint does not exist on Stripe's GHE.
 
 **For top-level comments:**
 ```bash
@@ -217,8 +248,14 @@ PR: [URL]
 
 # Engineering Principles
 
-## Default to action
-Most comments should result in code changes. Reviewers usually have good reasons.
+## Think first, then act
+Read the comment carefully. Understand what the reviewer is really asking for. A question deserves an answer. A change request deserves a code change. Guidance deserves acknowledgment and thoughtful application. Don't flatten everything into `✅ Fixed`.
+
+## Be a helpful collaborator, not a task executor
+- Answer questions with substance — explain the "why", not just the "what"
+- When a reviewer shares context (papers, formulas, design docs), engage with it thoughtfully
+- When a reviewer points out something is unnecessary, just remove it — don't add a comment explaining what you removed
+- When there's ambiguity, surface it to the user rather than guessing
 
 ## When to push back (rare)
 Only if the suggestion would:
@@ -227,13 +264,6 @@ Only if the suggestion would:
 - Require changes far outside PR scope (suggest a follow-up PR instead)
 - Conflict with explicit project constraints
 
-## Decision framework
-1. What is the reviewer concerned about?
-2. Can I address it with a code change?
-3. If not exactly as suggested, can I address the underlying concern differently?
-
-Default to "yes" unless there's a strong technical reason not to.
-
 # Important Notes
 
 - **Always use `pay stack checkout`** to switch branches, not `git checkout -b`
@@ -241,5 +271,6 @@ Default to "yes" unless there's a strong technical reason not to.
 - **Show diffs, not descriptions** — always show `git diff` output so the user sees exactly what changed
 - **One comment at a time** — don't batch changes unless the user says "automate all"
 - **Respect the thread** — read the full comment thread, not just the first message
-- **Reply in-thread** — use `gh api .../replies` for inline comments so replies appear in the right thread
+- **Reply in-thread** — use `gh api repos/{owner}/{repo}/pulls/{pr_number}/comments` with `-F in_reply_to={comment_id}` so replies appear in the right thread. Do NOT use the `.../replies` sub-endpoint (doesn't exist on Stripe GHE).
 - **Replies are prefixed with `[claude]`** to indicate they're from an AI agent
+- **Don't add unnecessary inline code comments** just to "address" a reviewer question — answer the question in the PR thread instead

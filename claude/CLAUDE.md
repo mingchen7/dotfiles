@@ -27,3 +27,7 @@ fi
 **Always** check `$SSH_CONNECTION` first:
 - **Local laptop** (`$SSH_CONNECTION` is empty): use `pay exec bazel test ...`
 - **Remote devbox** (`$SSH_CONNECTION` is set): use `bazel test ...` directly
+
+## Linting Python Files
+
+- **Local laptop**: use `./dev/lint --fix` to run lint on python files
