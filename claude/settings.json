@@ -128,13 +128,13 @@
       "Skill(ruby-verifier)"
     ]
   },
+  "model": "opus[1m]",
   "enabledPlugins": {
     "ralph-wiggum@claude-code-plugins": true,
+    "gradient-ds@gradient": true,
     "airflow@stripe-internal-marketplace": true,
-    "pay@stripe-internal-marketplace": true,
-    "gradient-ds@gradient": true
+    "pay@stripe-internal-marketplace": true
   },
   "alwaysThinkingEnabled": false,
-  "model": "opus[1m]",
   "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": true
 }
