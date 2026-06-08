@@ -133,8 +133,10 @@
     "ralph-wiggum@claude-code-plugins": true,
     "gradient-ds@gradient": true,
     "airflow@stripe-internal-marketplace": true,
-    "pay@stripe-internal-marketplace": true
+    "pay@stripe-internal-marketplace": true,
+    "data-transformation-run@stripe-internal-marketplace": true
   },
   "alwaysThinkingEnabled": false,
+  "effortLevel": "xhigh",
   "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": true
 }

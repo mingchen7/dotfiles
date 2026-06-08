@@ -28,6 +28,8 @@ alias tigs='tig status'
 alias vs='vim -S Session.vim'
 alias tcommit="git add . ; date +\"%Y-%m-%d\" | xargs git ci -m"
 alias ycommit="git add . ; date -v-1d +\"%Y-%m-%d\" | xargs git ci -m"
+alias chpay='cd ~/stripe/mint/pay-server && pay gitfs set pay-server'
+alias chzoo='cd ~/stripe/mint/zoolander && pay gitfs set zoolander'
 LESS="-iXRF"
 export LESS
 
