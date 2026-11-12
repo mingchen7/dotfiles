@@ -73,6 +73,9 @@ eval "$(pyenv init - zsh)"
 alias lg='lazygit'
 alias gst='git status'
 
+# herdr: register running devboxes as herdr machines
+[[ -x "$HOME/stripe/configs/bin/herdr-sync-machines" ]] && alias herdr-sync-machines="$HOME/stripe/configs/bin/herdr-sync-machines"
+
 # autoenv
 # source $(brew --prefix autoenv)/activate.sh
 # AUTOENV_ENABLE_LEAVE=yes
