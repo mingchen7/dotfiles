@@ -76,59 +76,9 @@ alias gst='git status'
 # herdr: register running devboxes as herdr machines
 [[ -x "$HOME/stripe/configs/bin/herdr-sync-machines" ]] && alias herdr-sync-machines="$HOME/stripe/configs/bin/herdr-sync-machines"
 
-# Wait for a new box to be running and to have herdr (installed by dotfiles
-# setup.sh), then add it to the herdr sidebar. Waiting for herdr avoids
-# `machine add`'s own installer, which mydata's egress proxy blocks.
-_herdr_register_new_box() {
-  local name="$1"
-  local deadline=$((SECONDS + 900))
-  export DEVBOX_SSH_NO_UPDATE_ACCESS=1
-  until pay remote list -a --raw \
-    | jq -e --arg n "$name" 'any(.[]; .name == $n and (.status | ascii_downcase) == "running")' >/dev/null; do
-    if (( SECONDS > deadline )); then
-      echo "timed out waiting for $name to run; register it later with herdr-sync-machines" >&2
-      return 0
-    fi
-    sleep 5
-  done
-  until ssh -n -o BatchMode=yes -o ConnectTimeout=25 "$name" 'command -v herdr' >/dev/null 2>&1; do
-    if (( SECONDS > deadline )); then
-      echo "herdr not on $name yet (dotfiles still running?); register it later with herdr-sync-machines" >&2
-      return 0
-    fi
-    sleep 15
-  done
-  local emoji
-  emoji="$(pay remote list --raw | jq -r --arg n "$name" '.[] | select(.name == $n) | .emoji // empty')"
-  herdr machine add "$name" --label "${emoji:+$emoji }$name"
-}
-
-# Create a remote devbox and add it to herdr. Branch is mingc/<name>.
-# Usage: newbox <name> [mint-workspace, default pay-server]
-newbox() {
-  local name="$1" workspace="${2:-pay-server}"
-  if [[ -z "$name" ]]; then
-    echo "Usage: newbox <name> [workspace]"
-    return 1
-  fi
-  # No --ssh: it blocks until that session exits, so registration would wait too.
-  pay remote new "$name" --repo mint --workspace "$workspace" \
-    --ide none --no-notify-on-ready --skip-confirm || return 1
-  _herdr_register_new_box "$name"
-}
-
-# Create a remote mydata and add it to herdr. Branch is mingc/<name>.
-# Usage: newdata <name> [mint-workspace, default zoolander] [size: small|medium|large, default medium]
-newdata() {
-  local name="$1" workspace="${2:-zoolander}" size="${3:-medium}"
-  if [[ -z "$name" ]]; then
-    echo "Usage: newdata <name> [workspace] [small|medium|large]"
-    return 1
-  fi
-  pay remote new "$name" --host-type "mydata-$size" --repo mint --workspace "$workspace" \
-    --ide none --no-notify-on-ready --skip-confirm || return 1
-  _herdr_register_new_box "$name"
-}
+# newbox/newdata: create a box and register it with herdr (scripts in stripe/configs)
+[[ -x "$HOME/stripe/configs/bin/newbox" ]] && alias newbox="$HOME/stripe/configs/bin/newbox"
+[[ -x "$HOME/stripe/configs/bin/newdata" ]] && alias newdata="$HOME/stripe/configs/bin/newdata"
 
 # autoenv
 # source $(brew --prefix autoenv)/activate.sh
